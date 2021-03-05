@@ -1,7 +1,7 @@
 import { startBot } from "https://deno.land/x/discordeno/mod.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
-const decoder = new TextDecoder('utf-8');
+const decoder = new TextDecoder("utf-8");
 let user = [];
 let eitaCounter = 0;
 let caraioCounter = 0;
@@ -38,7 +38,7 @@ function antiDesculpasForMorganna(message) {
 function executeStandard(message) {
   try {
     const channel = message.channel.name;
-    const standard = decoder.decode(Deno.readFileSync('intro.txt'));
+    const standard = decoder.decode(Deno.readFileSync("intro.txt"));
 
     messageSplited = message.content.split(" ");
 
@@ -55,7 +55,7 @@ function executeStandard(message) {
 
       try {
         const username = message.author.username;
-        const breakersBrute = decoder.decode(Deno.readFileSync('breakers.txt'));
+        const breakersBrute = decoder.decode(Deno.readFileSync("breakers.txt"));
         const breakersLine = breakersBrute.split("\n");
         const breakers = [];
 
@@ -75,11 +75,13 @@ function executeStandard(message) {
             `${username},${breaks + 1}`
           );
 
-          writeTextFileSync("breakers.txt", content)
+          writeTextFileSync("breakers.txt", content);
         } else {
           fs.appendFileSync("breakers.txt", `${username},1\n`);
 
-          writeTextFileSync("breakers.txt", `${username},1\n`, {"append": true})
+          writeTextFileSync("breakers.txt", `${username},1\n`, {
+            append: true,
+          });
         }
       } catch (err) {}
     }
@@ -133,7 +135,7 @@ async function generalCommands(message, splitMessage) {
   } else if (splitMessage[0] == "!amor") {
     message.reply("Amor!", { files: ["./img/pachiLuv.png"] });
   } else if (splitMessage[0] == "!cancelar") {
-    cancelamentosBrute = decoder.decode(Deno.readFileSync('cancelamentos.txt'));
+    cancelamentosBrute = decoder.decode(Deno.readFileSync("cancelamentos.txt"));
     cancelamentos = cancelamentosBrute.split("\n");
 
     var cancelamento =
@@ -148,12 +150,12 @@ async function generalCommands(message, splitMessage) {
     if (splitMessage[1]) {
       const standard = splitMessage[1].toLowerCase();
       const channel = message.channel.name;
-      writeTextFileSync(`padrao-${channel}.txt`, standard)
+      writeTextFileSync(`padrao-${channel}.txt`, standard);
       message.delete();
     }
   } else if (splitMessage[0] == "!vergonha") {
     try {
-      const breakersBrute = decoder.decode(Deno.readFileSync('breakers.txt'));
+      const breakersBrute = decoder.decode(Deno.readFileSync("breakers.txt"));
       const breakersLine = breakersBrute.split("\n");
       breakersMessage = "";
 
